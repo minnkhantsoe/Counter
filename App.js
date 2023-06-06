@@ -1,12 +1,38 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
+
+  [counter, setCounter] = useState(0);
+
+  const decrement = async() => {
+    setCounter(counter - 1);
+    AsyncStorage.setItem("number", counter.toString());
+  }
+
+  const increment = async() => {
+    setCounter(counter + 1);
+     AsyncStorage.setItem("number", counter.toString());
+  }
+
+  useEffect(() => {
+    AsyncStorage.getItem("number");
+    setCounter(this.counter);
+  }, []);
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+     <View style={styles.container}>
+        <Text style={{fontSize: 60, marginBottom: 20, borderWidth: 1, textAlign: 'center'}}>{counter} </Text>
+        <StatusBar style="auto" />
+        <View style={{ flexDirection: 'row' }}>
+          <Button onPress={decrement} title='Decrease'></Button>
+          <Text>          </Text>
+          <Button onPress={increment} title='Increase'></Button>
+        </View>
+      </View>
   );
 }
 
