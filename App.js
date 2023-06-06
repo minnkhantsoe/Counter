@@ -9,18 +9,18 @@ export default function App() {
 
   const decrement = async() => {
     setCounter(counter - 1);
-    AsyncStorage.setItem("number", counter.toString());
+    AsyncStorage.setItem("number", (counter-1).toString());
   }
 
   const increment = async() => {
     setCounter(counter + 1);
-     AsyncStorage.setItem("number", counter.toString());
+     AsyncStorage.setItem("number", (counter+1).toString());
   }
 
   const getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem("number").then(res => JSON.parse(counter));
-      return jsonValue != null ? setCounter(res) : null;
+      const jsonValue = await AsyncStorage.getItem("number").then(res => JSON.parse(res));
+      return jsonValue != null ? setCounter(jsonValue ?? 0) : null;
       
     } catch(e) {
       // error reading value
