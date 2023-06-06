@@ -17,9 +17,18 @@ export default function App() {
      AsyncStorage.setItem("number", counter.toString());
   }
 
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("number").then(res => JSON.parse(counter));
+      return jsonValue != null ? setCounter(res) : null;
+      
+    } catch(e) {
+      // error reading value
+    }
+  }
+
   useEffect(() => {
-    AsyncStorage.getItem("number");
-    setCounter(this.counter);
+    getData()
   }, []);
 
 
